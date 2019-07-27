@@ -1,34 +1,35 @@
 import './App.css';
-import React, { useState } from 'react'
-
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 /**
 * @author Matthew Yee
 **/
 
 const App = () => {
-  const [monsters, setMonsters] = useState([
-    {
-      name: 'Frankenstein',
-      id: 'a1'
-    },
-    {
-      name: 'Dracula',
-      id: 'a2'
-    },
-    {
-      name: 'Zombie',
-      id: 'a3'
-    }
-  ])
 
+  const [userData, setUserData] = useState([])
+
+  useEffect(() => {
+    const getUserData = async () => {
+      // fetch('https://jsonplaceholder.typicode.com/users')
+      // .then(response => response.json())
+      // .then(users => console.log(users))
+      const res = await axios.get('https://jsonplaceholder.typicode.com/users')
+      setUserData( res.data)
+      // console.log(res.data)
+    }
+    getUserData()
+  }, [])
  
+  
  return (
     <div>
-    {
-      monsters.map(monster => <h1 key={monster.id}> { monster.name } </h1>)
-    }
+      {
+        userData.map((users, i) => <h2 key = {i}> { users.name } </h2>)
+      }
    </div>
  )
 }
 
 export default App
+
